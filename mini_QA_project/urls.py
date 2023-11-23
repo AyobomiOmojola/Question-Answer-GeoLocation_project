@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('questions/', include('core_app.urls')),
     path('auth/', include('core_auth.urls')),
+    path('state/', include('ip_locator.urls')),
 ]
