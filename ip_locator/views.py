@@ -15,7 +15,7 @@ class locator(APIView):
     def get(self, request:Request):
         ip = get_client_ip(request)
         print(ip)
-        url = f'https://api.ipstack.com/{" "}?access_key=596f72325f924335772dab8008d6803f'
+        url = f'https://api.ipstack.com/{" "}?access_key={}'
         response = requests.get(url)
         data = response.json()
         city = data.get("city")
