@@ -6,8 +6,10 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import APIView 
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework_api_key.models import APIKey
-from ip_locator.models import APIKEYMOD
+# from rest_framework_api_key.models import APIKey
+from ip_locator.models import APIKEYMOD, Userprofile
+from ip_locator.serializers import APIKeySerializer
+import uuid
 
 
 
@@ -20,15 +22,18 @@ class RegisterView(APIView):
         serializer = self.serializer_class(data=data)
 
         if serializer.is_valid():
-            user = serializer.save()
-            api_key = APIKey.objects.create(name = 'my-remote-service')
-            api_keys = APIKEYMOD(api_key=api_key, user=self.request.user)
+            userr = serializer.save()
+            userprofile = Userprofile.objects.create(user=userr)
+            my_api_key = uuid.uuid4()
+            api_keys = APIKEYMOD(api_key=my_api_key,user=userprofile)
             api_keys.save()
+            api_serializer = APIKeySerializer(instance=api_keys)
 
 
             response = {
                 "MESSAGE": "User Created Successfully", 
                 "REGISTERED_USER": serializer.data,
+                "API_SERIALIZER": api_serializer.data,
                 #'token' : token.key
             }
 

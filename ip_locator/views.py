@@ -7,12 +7,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import APIView 
 from .serializers import LocationSerializer, APIKeySerializer
 from ipware import get_client_ip
-from dotenv import load_dotenv
-from rest_framework_api_key.permissions import HasAPIKey
-from rest_framework_api_key.models import APIKey
+from mini_QA_project.settings import ACCESS_KEY
+# from rest_framework_api_key.permissions import HasAPIKey
+# from rest_framework_api_key.models import APIKey
 import os
 
-load_dotenv()
 
 
 ACCESS_KEY = os.environ['ACCESS_KEY']
@@ -24,7 +23,7 @@ class locator(APIView):
         url = f'https://api.ipstack.com/{ip}?access_key={ACCESS_KEY}'
         response = requests.get(url)
         data = response.json()
-        city = data.get("city")
+        city = data.get("country")
         state = location(state=city, user=self.request.user)
         state.save()
         exact_state = location.objects.filter(user=self.request.user)
@@ -50,6 +49,11 @@ class GetAPiKey(APIView):
             "APIKEY": serializer.data
         }
         return Response(data = response, status = status.HTTP_200_OK)
+    
+# user models
+# api model, api key and user as foreign
+# generate post api key*
+# post save signal on model 
 
 
 

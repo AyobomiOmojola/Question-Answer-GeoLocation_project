@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,6 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ACCESS_KEY = os.environ['ACCESS_KEY']
 
 # Application definition
 
@@ -41,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    "rest_framework_api_key",
     'core_app',
     'core_auth',
     'ip_locator',
