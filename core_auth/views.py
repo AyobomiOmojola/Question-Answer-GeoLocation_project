@@ -6,20 +6,24 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import APIView 
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework_api_key.models import APIKey
+from ip_locator.models import APIKEYMOD
+
 
 
 
 class RegisterView(APIView):
     serializer_class = RegisterSerializer
 
-
     def post(self, request: Request):
         data = request.data
-
         serializer = self.serializer_class(data=data)
 
         if serializer.is_valid():
             user = serializer.save()
+            api_key = APIKey.objects.create(name = 'my-remote-service')
+            api_keys = APIKEYMOD(api_key=api_key, user=self.request.user)
+            api_keys.save()
 
 
             response = {

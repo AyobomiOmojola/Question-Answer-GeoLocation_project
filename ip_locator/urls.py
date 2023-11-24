@@ -5,4 +5,5 @@ from . import views
 
 urlpatterns = [
     path("locator/", views.locator.as_view(), name="locator"),
+    path("getapikey/", views.GetAPiKey.as_view(), name="getapikey"),
 ]
