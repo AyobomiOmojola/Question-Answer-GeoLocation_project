@@ -13,12 +13,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+
+
 load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'core_app',
     'core_auth',
     'ip_locator',
+    'rosetta'
     
 ]
 
@@ -65,7 +68,7 @@ ROOT_URLCONF = 'mini_QA_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -146,3 +149,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SIMPLE_API_KEY = {
     "FERNET_SECRET": os.environ.get("FERNET_SECRET"),
 }
+
+# from django.utils.translation import gettext_lazy as _
+
+# LANGUAGE_CODE = 'en-us' # This is optional language choice.
+# USE_I18N = True
+# USE_L10N = True
+# LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+# # What language you want. You should iso codes for language codes. 
+# # You can find iso codes in here.
+# LANGUAGES = [
+#     ('en', _('English')),
+#     ('tr', _('Turkish')),
+
+# ]
+# # Rosetta store the translation datas in this file. 
+# LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)

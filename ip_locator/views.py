@@ -8,6 +8,7 @@ from rest_framework.decorators import APIView
 from .serializers import LocationSerializer, APIKeySerializer
 from ipware import get_client_ip
 from mini_QA_project.settings import ACCESS_KEY
+from translate import Translator
 # from rest_framework_api_key.permissions import HasAPIKey
 # from rest_framework_api_key.models import APIKey
 import os
@@ -49,11 +50,24 @@ class GetAPiKey(APIView):
             "APIKEY": serializer.data
         }
         return Response(data = response, status = status.HTTP_200_OK)
-    
-# user models
-# api model, api key and user as foreign
-# generate post api key*
-# post save signal on model 
+
+
+def Translate(request):
+    if request.method == 'POST':
+
+        text = request.POST['translate']
+        to_lang = request.POST['tolanguage']
+        from_lang = request.POST["fromlanguage"]
+        translator = Translator(to_lang=to_lang, from_lang=from_lang)
+        translation = translator.translate(text)
+        
+        context = {
+            'translation': translation,
+            
+        }
+        return render(request,'translate.html', context)
+    return render(request, 'translate.html')
+
 
 
 
